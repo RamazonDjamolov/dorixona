@@ -1,0 +1,7 @@
+
+crispy-bootstrap5==2025.4
+Django==5.2
+django-countries==7.6.1
+
+
+
