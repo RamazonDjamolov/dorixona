@@ -14,16 +14,23 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from xml.etree.ElementInclude import include
+
 from django.contrib import admin
 from django.shortcuts import render
-from django.urls import path
+from django.urls import path, include
 
 from warehouse.views.products import ProductWithUnitCreateView
+
 # def TestView(request):
 #     return render(request, 'base/test.html')
 
+def test(request):
+    return render(request, 'base/test.html')
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     # path("", TestView),
+    path("__reload__/", include("django_browser_reload.urls")),
     path('', ProductWithUnitCreateView.as_view()),
 ]
