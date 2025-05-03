@@ -1,20 +1,20 @@
 from django.db import models
 from django_countries.fields import CountryField
 
+from accounts.models.company import Company
+
 
 # Create your models here.
-class PackageType(models.TextChoices):
-    BOX = ("box", "Box")
-    PACKAGE = ("package", "Package")
-    BLISTER = ("blister", "Blister")
-    BOTTLE = ("bottle", "Bottle")
-    VIAL = ("vial", "Vial")
-    AMPULE = ("ampule", "Ampule")
-    SACHET = ("sachet", "Sachet")
-    TUBE = ("tube", "Tube")
-    JAR = ("jar", "Jar")
-    STRIP = ("strip", "Strip")
+class PackType(models.TextChoices):
+    BOX = 'box', 'box' # karobka
+    BAG = 'bag', 'bag' # qop sumkka
+    CONTAINER = 'container', 'container' # quti konatiner nazarida oq idiw
 
+
+class Unit_type (models.TextChoices):
+    BLISTER = 'blister', 'Blister'
+    VIAL = 'vial', 'Flakon'
+    AMPULE = 'ampule', 'Ampula'
 
 class DosageForm(models.TextChoices):
     TABLET = ("tablet", "Tablet")
@@ -33,7 +33,6 @@ class DosageForm(models.TextChoices):
 
 
 class DosageForm(models.TextChoices):
-    BLISTER = ("blister", "Blister (Blister-pack)")  # Blister (Blister-qadoq)
     TABLET = ("tablet", "Tablet (Tablet)")  # Tablet (Tablet)
     CAPSULE = ("capsule", "Capsule (Kapsula)")  # Capsule (Kapsula)
     SYRUP = ("syrup", "Syrup (Sirob)")  # Syrup (Sirob)
@@ -49,7 +48,7 @@ class DosageForm(models.TextChoices):
     SOLUTION = ("solution", "Solution (Eritma)")  # Solution (Eritma)
 
 
-class MeasureUnit(models.TextChoices):
+class Dosage_type(models.TextChoices):
     MG = ("mg", "Milligram")
     G = ("g", "Gram")
     KG = ("kg", "Kilogram")
@@ -66,14 +65,26 @@ class MeasureUnit(models.TextChoices):
     GALLON = ("gallon", "Gallon")
 
 #  O'lchov birligi bilan
-class ProductWithUnit(models.Model):  # С единицей измерения
+class Warehouse(models.Model):  # С единицей измерения
     name = models.CharField(max_length=255)  # nomi
     country = CountryField(blank_label="(select country)")  # choices
-    Manufacturer = models.CharField(max_length=255)  # proizvodeitel
-    Package_id = models.CharField(choices=PackageType.choices,  max_length=255, default=PackageType.BOX)  # tara karobka upakovka
-    Dosage_form = models.CharField(choices=DosageForm.choices, max_length=255, default=DosageForm.TABLET)  # Formasi gel yoki blister choices
-    Dosage_form_amount = models.IntegerField()  # 1 pochkani ichida nechi dona dori borligi
-    Dosage = models.IntegerField()# 1ta dona tabletka nechi  gramligini soni
-    Measure_unit = models.CharField(max_length=255,choices=MeasureUnit.choices, default=MeasureUnit.MG)  # choiches ml yoki
+    pack_type = models.CharField(choices=PackType.choices , default=PackType.BOX )
+    unit_type = models.CharField(choices=Unit_type.choices , default=Unit_type.BLISTER, max_length=255) # Upakovka ichidagi birlik turi
+    units_per_pack = models.IntegerField()  # Bir upakovkada nechta birlik bor
+    tablets_per_blister = models.IntegerField() # Agar birlik blister bo‘lsa, blister ichida nechta tabletka bor (
+    dosage = models.IntegerField() # dozasi
+    dosage_type= models.CharField(choices=Dosage_type.choices , default=Dosage_type.MG)
+    form = models.CharField(choices=DosageForm.choices , default=DosageForm.TABLET)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+
+
+
+    class Meta:
+        db_table = 'warehouse'
+        ordering =  ["-id"]
+        app_label = 'warehouse'
+
+
+
 
 

@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-zv5r7s()5t9z()88r3$e0)#vkr%r*5j4_0!vpv+immg9x9+!qy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -36,17 +36,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    "crispy_forms",
-    "crispy_bootstrap5",
-    'tailwind',
-    'theme',
-    'django_browser_reload',
 
 
-    "warehouse",
+
+    "warehouse", # sklad
+    "inventory", # krim va sotilishiga
+    "moneys",  # asosiy foydalar
+
 ]
 
-TAILWIND_APP_NAME = 'theme'
 
 
 MIDDLEWARE = [
@@ -91,6 +89,8 @@ DATABASES = {
     }
 }
 
+
+
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -114,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 
@@ -130,6 +130,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-
-CRISPY_TEMPLATE_PACK = "bootstrap5"
+AUTH_USER_MODEL = 'accounts.accounts.User'

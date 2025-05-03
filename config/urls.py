@@ -20,17 +20,18 @@ from django.contrib import admin
 from django.shortcuts import render
 from django.urls import path, include
 
-from warehouse.views.products import ProductWithUnitCreateView
 
 # def TestView(request):
 #     return render(request, 'base/test.html')
 
-def test(request):
-    return render(request, 'base/test.html')
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("api/v1/", include(
+
+        path('', include('warehouse.urls')),
+        []
+
+    ))
 
     # path("", TestView),
-    path("__reload__/", include("django_browser_reload.urls")),
-    path('', ProductWithUnitCreateView.as_view()),
 ]
