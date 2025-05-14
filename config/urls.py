@@ -23,15 +23,15 @@ from django.urls import path, include
 
 # def TestView(request):
 #     return render(request, 'base/test.html')
-
+from django_browser_reload import urls as browser_reload_urls
 urlpatterns = [
+    path('__reload__/', include(browser_reload_urls)),
     path('admin/', admin.site.urls),
-    path("api/v1/", include(
+    path('api/v1/', include([
+    path('', include('warehouse.urls')),
 
-        path('', include('warehouse.urls')),
-        []
 
-    ))
+    ]))
 
-    # path("", TestView),
+
 ]

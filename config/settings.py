@@ -37,13 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
 
-
+    'django_browser_reload',
 
     "warehouse", # sklad
     "inventory", # krim va sotilishiga
     "moneys",  # asosiy foydalar
+    'accounts',
 
 ]
+
+AUTH_USER_MODEL = 'accounts.User'
 
 
 
@@ -130,4 +133,3 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'accounts.accounts.User'

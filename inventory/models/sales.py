@@ -2,11 +2,10 @@ import datetime
 
 from django.db import models
 
-from warehouse.models.WarehouseWithUnitOfMeasurement import Warehouse
 
 
 class SalesOrder(models.Model):
-    warehouse_id = models.ForeignKey(Warehouse, on_delete=models.RESTRICT)
+    warehouse_id = models.ForeignKey('warehouse.WarehouseWithUnitOfMeasurement', on_delete=models.RESTRICT)
     price_in_pack = models.DecimalField(max_digits=1000000, decimal_places=2)
     price_in_unit = models.DecimalField(max_digits=1000000, decimal_places=2)
     price_tablets_per_blister = models.DecimalField(max_digits=1000000, decimal_places=2)
